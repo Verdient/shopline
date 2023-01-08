@@ -80,7 +80,11 @@ trait HasList
                 throw new Exception($res->getErrorMessage());
             }
             $resData = $res->getData();
-            yield reset($resData);
+            $data = reset($resData);
+            if (!is_array($data)) {
+                $data = [];
+            }
+            yield $data;
             $headers = $res->getResponse()->getHeaders();
             $link = $headers['link'] ?? ($headers['Link'] ?? null);
             if ($link) {
